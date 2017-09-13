@@ -1,5 +1,4 @@
 import {GalleryModule} from './gallery.module';
-import {GalleryService} from './service/gallery.service';
 import {
   GalleryState,
   GalleryImage,
@@ -16,7 +15,6 @@ import {
 
 export {
   GalleryModule,
-  GalleryService,
   GalleryState,
   GalleryImage,
   GalleryConfig,

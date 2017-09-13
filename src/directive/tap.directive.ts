@@ -1,7 +1,7 @@
 /** This directive enable tap if HammerJS is loaded, otherwise it uses the normal click event (useful for thumbnail click) */
 
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { GalleryService } from '../service/gallery.service';
+import { GalleryConfig } from '../config';
 
 declare const Hammer: any;
 
@@ -12,8 +12,10 @@ export class TapDirective implements OnInit {
 
   @Input() tap;
   @Output() tapClick = new EventEmitter();
+  @Input() galleryConfig: GalleryConfig
+  
 
-  constructor(private gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor( private el: ElementRef, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class TapDirective implements OnInit {
   /** Enable gestures if hammer is loaded */
   setTapEvent() {
 
-    if (this.gallery.config.gestures) {
+    if (this.galleryConfig.gestures) {
       if (typeof Hammer === 'undefined') {
 
         throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
 import { GalleryLoaderConfig } from '../../config';
 
 @Component({
@@ -14,7 +13,7 @@ export class GalleryLoaderComponent implements OnInit {
   icon;
   styles;
 
-  constructor(public gallery: GalleryService) {
+  constructor() {
   }
 
   ngOnInit() {

@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { GalleryState } from '../../service/gallery.state';
 import { GalleryConfig } from '../../config';
-import { GalleryService } from '../../service/gallery.service';
 import { animation } from './gallery-image.animation';
+import { EventEmitter, Output } from '@angular/core';
 
 declare const Hammer: any;
 
@@ -24,10 +24,15 @@ export class GalleryImageComponent implements OnInit {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
+
+  @Output() next = new EventEmitter();
+  @Output() prev = new EventEmitter();
+  
+
   loading: boolean;
   animate: string;
 
-  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -52,14 +57,16 @@ export class GalleryImageComponent implements OnInit {
         });
         /** Swipe next and prev */
         mc.on('swipeleft', () => {
-          this.gallery.next();
+          this.next.emit();
         });
         mc.on('swiperight', () => {
-          this.gallery.prev();
+          this.prev.emit();
         });
       }
     }
   }
+
+
 
   imageLoad(done: boolean) {
     this.loading = !done;

@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { GalleryService } from './service/gallery.service';
 import { GalleryConfig } from './config/gallery.config';
 
 import { GalleryComponent } from './component/gallery/gallery.component';
@@ -18,11 +17,6 @@ import { GalleryMainComponent } from './component/gallery-main/gallery-main.comp
 import { GalleryDirective } from './directive/gallery.directive';
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
-
-/** Initialize ConfigService with URL */
-export function galleryFactory(config: GalleryConfig) {
-  return new GalleryService(config);
-}
 
 export const CONFIG = new InjectionToken<GalleryConfig>('config');
 
@@ -57,12 +51,7 @@ export class GalleryModule {
     return {
       ngModule: GalleryModule,
       providers: [
-        { provide: CONFIG, useValue: config },
-        {
-          provide: GalleryService,
-          useFactory: galleryFactory,
-          deps: [CONFIG]
-        }
+        { provide: CONFIG, useValue: config }
       ]
     };
   }

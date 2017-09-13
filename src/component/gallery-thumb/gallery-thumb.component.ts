@@ -1,9 +1,7 @@
-import {
-  Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit
+import { Output, EventEmitter, Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit
 } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
 import { GalleryState } from '../../service/gallery.state';
-import { GalleryThumbConfig } from '../../config';
+import { GalleryThumbConfig, GalleryConfig } from '../../config';
 
 declare const Hammer: any;
 
@@ -18,9 +16,14 @@ export class GalleryThumbComponent implements OnInit {
   @Input() state: GalleryState;
   @Input() config: GalleryThumbConfig;
 
+  @Input() galleryConfig: GalleryConfig
+
+  @Output() next = new EventEmitter();
+  @Output() prev = new EventEmitter();
+ 
   contStyle;
 
-  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
 
   }
 
@@ -29,7 +32,7 @@ export class GalleryThumbComponent implements OnInit {
     this.contStyle = this.getContainerStyle();
 
     /** Enable gestures */
-    if (this.gallery.config.gestures) {
+    if (this.galleryConfig.gestures) {
       if (typeof Hammer === 'undefined') {
 
         throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');
@@ -50,10 +53,10 @@ export class GalleryThumbComponent implements OnInit {
         });
         /** Swipe next and prev */
         mc.on('swipeleft', () => {
-          this.gallery.next();
+          this.next.emit();
         });
         mc.on('swiperight', () => {
-          this.gallery.prev();
+          this.prev.emit();
         });
       }
     }
@@ -76,8 +79,6 @@ export class GalleryThumbComponent implements OnInit {
   }
 
   getThumbImage(i) {
-    /** Use thumbnail if presented */
     return `url(${this.state.images[i].thumbnail || this.state.images[i].src})`;
   }
-
 }

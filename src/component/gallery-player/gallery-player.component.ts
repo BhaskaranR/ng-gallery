@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { GalleryPlayConfig } from '../../config';
 import { GalleryState } from '../../service/gallery.state';
 
@@ -14,13 +13,15 @@ export class GalleryPlayerComponent implements OnInit {
   @Input() config: GalleryPlayConfig;
   @Input() state: GalleryState;
 
-  constructor(public gallery: GalleryService) {
+  @Output() play = new EventEmitter();
+
+  constructor() {
   }
 
   ngOnInit() {
     /** Start auto-play if enabled */
     if (this.config.autoplay) {
-      this.gallery.play();
+      this.play.emit();
     }
 
     /** TODO: Display status bar */

@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
+import { ChangeDetectionStrategy, Component, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'gallery-nav',
@@ -11,7 +10,10 @@ export class GalleryNavComponent {
 
   @Input() state;
 
-  constructor(public gallery: GalleryService) {
+  @Output() next = new EventEmitter();
+  @Output() prev = new EventEmitter();
+
+  constructor() {
   }
 
 }

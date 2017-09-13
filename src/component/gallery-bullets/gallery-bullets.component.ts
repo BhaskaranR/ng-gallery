@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, Renderer2, ChangeDetectionStrategy } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
 import { GalleryState } from '../../service/gallery.state';
 import { GalleryBulletConfig } from '../../config';
 
@@ -14,7 +13,7 @@ export class GalleryBulletsComponent implements OnInit {
   @Input() state: GalleryState;
   @Input() config: GalleryBulletConfig;
 
-  constructor(public gallery: GalleryService, private renderer: Renderer2, private el: ElementRef) {
+  constructor(private renderer: Renderer2, private el: ElementRef) {
   }
 
   ngOnInit() {
